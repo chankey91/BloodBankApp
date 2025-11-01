@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Network Application - Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            color: white;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide h2 {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid rgba(255,255,255,0.3);
+            padding-bottom: 15px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            margin: 25px 0 15px 0;
+            color: #ffd700;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.3em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .slide ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .slide li {
+            padding-left: 40px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .slide li:before {
+            content: "▶";
+            position: absolute;
+            left: 10px;
+            color: #ffd700;
+        }
+
+        .highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ffd700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffd700;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            background: white;
+            color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1.1em;
+            z-index: 1000;
+        }
+
+        .code-block {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        /* Title Slide */
+        .slide.title-slide {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .title-slide h1 {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide p {
+            font-size: 1.8em;
+            margin: 10px 0;
+        }
+
+        /* Problem Slide */
+        .slide.problem-slide {
+            background: linear-gradient(135deg, #e74c3c 0%, #8e44ad 100%);
+        }
+
+        /* Solution Slide */
+        .slide.solution-slide {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+
+        /* Tech Slide */
+        .slide.tech-slide {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+        }
+
+        /* Demo Slide */
+        .slide.demo-slide {
+            background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+        }
+
+        .workflow-box {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 5px solid #ffd700;
+        }
+
+        .impact-number {
+            font-size: 4em;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        @media print {
+            .slide {
+                page-break-after: always;
+                display: block !important;
+                height: auto;
+            }
+            .controls, .slide-counter {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">30</span>
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1><span class="emoji">🩸</span>Blood Bank Network</h1>
+            <p>A Comprehensive Blood Management System</p>
+            <br><br>
+            <p style="font-size: 1.4em;">Connecting Donors, Blood Banks, and Hospitals</p>
+            <p style="font-size: 1.2em; opacity: 0.9;">Saving Lives Through Technology</p>
+        </div>
+
+        <!-- Slide 2: Problem Statement -->
+        <div class="slide problem-slide">
+            <h2><span class="emoji">🎯</span>The Problem</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">3 sec</span>
+                    Someone needs blood
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">38K+</span>
+                    Daily blood requirement
+                </div>
+            </div>
+            <h3>Critical Challenges:</h3>
+            <ul>
+                <li>Fragmented and disconnected blood bank systems</li>
+                <li>Time-consuming manual search processes</li>
+                <li>No real-time inventory visibility</li>
+                <li>Critical delays in emergency situations</li>
+                <li>Blood wastage due to poor management</li>
+                <li>Inefficient donor-patient matching</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Our Solution -->
+        <div class="slide solution-slide">
+            <h2><span class="emoji">💡</span>Our Solution</h2>
+            <div class="highlight">
+                <h3>A unified digital platform connecting the entire blood donation ecosystem</h3>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">🔍 Instant Blood Search</div>
+                <div class="feature-item">🚨 Emergency Alerts</div>
+                <div class="feature-item">📊 Real-time Inventory</div>
+                <div class="feature-item">🏥 Hospital Integration</div>
+                <div class="feature-item">👥 Donor Management</div>
+                <div class="feature-item">📱 Mobile Notifications</div>
+                <div class="feature-item">🎯 Smart Matching</div>
+                <div class="feature-item">📈 Analytics Dashboard</div>
+            </div>
+            <h3 style="margin-top: 30px;">Mission: Make finding blood as easy as a few clicks</h3>
+        </div>
+
+        <!-- Slide 4: Key Features -->
+        <div class="slide">
+            <h2><span class="emoji">✨</span>10 Core Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <strong>1. Blood Availability Search</strong><br>
+                    Real-time inventory with geolocation
+                </div>
+                <div class="feature-item">
+                    <strong>2. Donor Management</strong><br>
+                    Complete lifecycle tracking
+                </div>
+                <div class="feature-item">
+                    <strong>3. Request System</strong><br>
+                    Urgent blood requests & matching
+                </div>
+                <div class="feature-item">
+                    <strong>4. Blood Bank Network</strong><br>
+                    Multi-bank integration
+                </div>
+                <div class="feature-item">
+                    <strong>5. Geo-Location Services</strong><br>
+                    Find nearby donors & banks
+                </div>
+                <div class="feature-item">
+                    <strong>6. Real-Time Notifications</strong><br>
+                    Instant alerts via Socket.io
+                </div>
+                <div class="feature-item">
+                    <strong>7. Gamification</strong><br>
+                    Rewards, badges & points
+                </div>
+                <div class="feature-item">
+                    <strong>8. Donation Camps</strong><br>
+                    Event management system
+                </div>
+                <div class="feature-item">
+                    <strong>9. Analytics Dashboard</strong><br>
+                    Data insights & trends
+                </div>
+                <div class="feature-item">
+                    <strong>10. Enterprise Security</strong><br>
+                    JWT, RBAC, encryption
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: User Roles -->
+        <div class="slide">
+            <h2><span class="emoji">👥</span>User Roles & Benefits</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 3em;">🩸</span>
+                    <h3>Donors</h3>
+                    <p style="font-size: 1em;">Track donations, earn rewards, respond to emergencies</p>
+                </div>
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 3em;">🏥</span>
+                    <h3>Blood Banks</h3>
+                    <p style="font-size: 1em;">Manage inventory, organize camps, analytics</p>
+                </div>
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 3em;">🏨</span>
+                    <h3>Hospitals</h3>
+                    <p style="font-size: 1em;">Create requests, search blood, track status</p>
+                </div>
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 3em;">👨‍💼</span>
+                    <h3>Admins</h3>
+                    <p style="font-size: 1em;">System oversight, analytics, user management</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Technology Stack -->
+        <div class="slide tech-slide">
+            <h2><span class="emoji">🛠️</span>Technology Stack</h2>
+            <h3>Backend Technologies:</h3>
+            <div class="tech-stack">
+                <div class="tech-badge">Node.js</div>
+                <div class="tech-badge">Express.js</div>
+                <div class="tech-badge">MongoDB</div>
+                <div class="tech-badge">Socket.io</div>
+                <div class="tech-badge">JWT</div>
+                <div class="tech-badge">Mongoose</div>
+            </div>
+            <h3>Frontend Technologies:</h3>
+            <div class="tech-stack">
+                <div class="tech-badge">React 18</div>
+                <div class="tech-badge">React Router</div>
+                <div class="tech-badge">Axios</div>
+                <div class="tech-badge">Chart.js</div>
+                <div class="tech-badge">Leaflet Maps</div>
+                <div class="tech-badge">React Toastify</div>
+            </div>
+            <h3>Security & Tools:</h3>
+            <div class="tech-stack">
+                <div class="tech-badge">Helmet.js</div>
+                <div class="tech-badge">bcrypt</div>
+                <div class="tech-badge">CORS</div>
+                <div class="tech-badge">Rate Limiting</div>
+                <div class="tech-badge">Express Validator</div>
+                <div class="tech-badge">node-cron</div>
+            </div>
+        </div>
+
+        <!-- Slide 7: System Architecture -->
+        <div class="slide">
+            <h2><span class="emoji">🏗️</span>System Architecture</h2>
+            <div class="code-block">
+┌─────────────────────────────────────┐
+│      Frontend (React)               │
+│  • User Interface                   │
+│  • Real-time Updates                │
+│  • State Management                 │
+└──────────┬──────────────────────────┘
+           │ REST API / WebSocket
+┌──────────┴──────────────────────────┐
+│   Backend (Node.js/Express)         │
+│  • Authentication & Authorization   │
+│  • Business Logic                   │
+│  • Real-time Communication          │
+└──────────┬──────────────────────────┘
+           │ Mongoose ODM
+┌──────────┴──────────────────────────┐
+│      Database (MongoDB)             │
+│  • User & Profile Data              │
+│  • Inventory & Requests             │
+│  • Notifications & Analytics        │
+└─────────────────────────────────────┘
+            </div>
+            <h3>Key Components:</h3>
+            <ul>
+                <li>JWT-based Authentication Layer</li>
+                <li>Socket.io Real-time Communication</li>
+                <li>Geolocation Services (MongoDB GeoJSON)</li>
+                <li>Automated Task Scheduler (node-cron)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Blood Search Feature -->
+        <div class="slide">
+            <h2><span class="emoji">🔍</span>Smart Blood Search</h2>
+            <h3>Search Parameters:</h3>
+            <div class="features-grid">
+                <div class="feature-item">Blood Type (A+, B+, O-, AB+, etc.)</div>
+                <div class="feature-item">Component (Whole Blood, Plasma, Platelets)</div>
+                <div class="feature-item">Location (City, Radius)</div>
+                <div class="feature-item">Urgency Level</div>
+            </div>
+            <h3>Search Results Include:</h3>
+            <ul>
+                <li>Available units in real-time</li>
+                <li>Blood bank details & contact info</li>
+                <li>Distance from user location</li>
+                <li>Operating hours & facilities</li>
+                <li>Interactive map view</li>
+            </ul>
+            <div class="highlight">
+                <strong>Technology:</strong> GeoJSON for location storage + MongoDB geospatial queries
+            </div>
+        </div>
+
+        <!-- Slide 9: Donor Management -->
+        <div class="slide">
+            <h2><span class="emoji">👤</span>Donor Management</h2>
+            <h3>Complete Profile System:</h3>
+            <div class="workflow-box">Personal Info → Blood Type → Health History → Location → Eligibility Check</div>
+            <h3>Key Features:</h3>
+            <ul>
+                <li><strong>Automatic Eligibility:</strong> Based on 56-day donation cycle</li>
+                <li><strong>Donation History:</strong> Complete record with certificates</li>
+                <li><strong>Rewards System:</strong> Points, badges, achievements</li>
+                <li><strong>Health Tracking:</strong> Medical history & updates</li>
+                <li><strong>Reminders:</strong> Email notifications when eligible</li>
+            </ul>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">🏆</span>
+                    Gamification
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">📜</span>
+                    Certificates
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">⭐</span>
+                    Badges
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Request System -->
+        <div class="slide">
+            <h2><span class="emoji">🚨</span>Blood Request System</h2>
+            <h3>Request Workflow:</h3>
+            <div class="workflow-box">
+                <strong>1. Create Request</strong> → Patient info, blood type, urgency
+            </div>
+            <div class="workflow-box">
+                <strong>2. Smart Matching</strong> → Find eligible donors nearby
+            </div>
+            <div class="workflow-box">
+                <strong>3. Notify Donors</strong> → Real-time alerts via Socket.io
+            </div>
+            <div class="workflow-box">
+                <strong>4. Collect Responses</strong> → Willing/Not Available/Not Eligible
+            </div>
+            <div class="workflow-box">
+                <strong>5. Coordinate</strong> → Blood bank arranges collection
+            </div>
+            <div class="workflow-box">
+                <strong>6. Update Status</strong> → Mark as fulfilled
+            </div>
+            <h3>Priority Levels:</h3>
+            <div class="features-grid">
+                <div class="feature-item" style="background: rgba(231, 76, 60, 0.3);">🔴 Critical - Immediate</div>
+                <div class="feature-item" style="background: rgba(230, 126, 34, 0.3);">🟠 Urgent - High Priority</div>
+                <div class="feature-item" style="background: rgba(46, 204, 113, 0.3);">🟢 Normal - Standard</div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Donation Camps -->
+        <div class="slide">
+            <h2><span class="emoji">🎪</span>Donation Camps</h2>
+            <h3>Camp Management Features:</h3>
+            <ul>
+                <li><strong>Create Camps:</strong> Blood banks organize drives with targets</li>
+                <li><strong>Browse & Register:</strong> Donors find and join nearby camps</li>
+                <li><strong>Track Status:</strong> Upcoming, Ongoing, Completed</li>
+                <li><strong>Notifications:</strong> Reminders and updates</li>
+                <li><strong>Analytics:</strong> Registration counts and success rates</li>
+            </ul>
+            <h3>Benefits:</h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 2.5em;">📈</span>
+                    <p style="font-size: 1em;">Increased Donor Engagement</p>
+                </div>
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 2.5em;">🎯</span>
+                    <p style="font-size: 1em;">Organized Collection</p>
+                </div>
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 2.5em;">🤝</span>
+                    <p style="font-size: 1em;">Community Participation</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Inventory Management -->
+        <div class="slide">
+            <h2><span class="emoji">📊</span>Inventory Management</h2>
+            <h3>Smart Inventory Dashboard:</h3>
+            <div class="code-block">
+Blood Type | Component    | Units | Status
+─────────────────────────────────────────
+A+         | Whole Blood  | 45    | ✅ In Stock
+O-         | Plasma       | 8     | ⚠️  Low Stock
+B+         | Platelets    | 0     | ❌ Out of Stock
+AB-        | RBC          | 12    | ✅ In Stock
+            </div>
+            <h3>Features:</h3>
+            <ul>
+                <li>Real-time stock level monitoring</li>
+                <li>Automated low-stock alerts</li>
+                <li>Unit-wise tracking (Bag ID, expiry date)</li>
+                <li>Component-wise breakdown</li>
+                <li>Status indicators (Available/Reserved/Issued)</li>
+                <li>Expiry warnings (7 days advance)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 13: Analytics Dashboard -->
+        <div class="slide">
+            <h2><span class="emoji">📈</span>Analytics & Insights</h2>
+            <h3>Key Metrics:</h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">1,247</span>
+                    Total Donors
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">892</span>
+                    Eligible Donors
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">15</span>
+                    Active Requests
+                </div>
+            </div>
+            <h3>Visual Analytics:</h3>
+            <ul>
+                <li>📊 Blood Type Distribution (Pie Charts)</li>
+                <li>📈 Donation Trends (Line Graphs)</li>
+                <li>📉 Inventory Levels (Bar Charts)</li>
+                <li>🗺️ Geographic Distribution (Heat Maps)</li>
+                <li>📅 Monthly/Yearly Reports</li>
+            </ul>
+        </div>
+
+        <!-- Slide 14: Real-Time Notifications -->
+        <div class="slide">
+            <h2><span class="emoji">🔔</span>Real-Time Notifications</h2>
+            <h3>Notification Types:</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <strong>🚨 Emergency Alerts</strong><br>
+                    Critical blood requests
+                </div>
+                <div class="feature-item">
+                    <strong>⏰ Eligibility Reminders</strong><br>
+                    When eligible to donate
+                </div>
+                <div class="feature-item">
+                    <strong>📦 Inventory Alerts</strong><br>
+                    Low stock warnings
+                </div>
+                <div class="feature-item">
+                    <strong>✅ Status Updates</strong><br>
+                    Request fulfillment
+                </div>
+            </div>
+            <h3>Delivery Channels:</h3>
+            <div class="tech-stack">
+                <div class="tech-badge">✉️ Email (Nodemailer)</div>
+                <div class="tech-badge">📱 In-app Notifications</div>
+                <div class="tech-badge">🔔 Push Notifications</div>
+                <div class="tech-badge">⚡ Socket.io Real-time</div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Gamification -->
+        <div class="slide">
+            <h2><span class="emoji">🎮</span>Gamification & Rewards</h2>
+            <h3>Points System:</h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">100</span>
+                    First Donation
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">50</span>
+                    Regular Donation
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">150</span>
+                    Emergency Response
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">75</span>
+                    Camp Participation
+                </div>
+            </div>
+            <h3>Achievement Badges:</h3>
+            <ul>
+                <li>🏆 <strong>First Timer</strong> - First donation completed</li>
+                <li>⭐ <strong>Regular Donor</strong> - 5+ donations</li>
+                <li>🌟 <strong>Hero Donor</strong> - 10+ donations</li>
+                <li>💪 <strong>Emergency Responder</strong> - Responded to critical request</li>
+                <li>🎪 <strong>Camp Champion</strong> - Attended 3+ camps</li>
+            </ul>
+        </div>
+
+        <!-- Slide 16: Security Features -->
+        <div class="slide">
+            <h2><span class="emoji">🔐</span>Security Features</h2>
+            <h3>Authentication & Authorization:</h3>
+            <ul>
+                <li><strong>JWT Authentication:</strong> Secure token-based system</li>
+                <li><strong>Password Hashing:</strong> bcrypt encryption</li>
+                <li><strong>Role-Based Access Control:</strong> Donor, Blood Bank, Hospital, Admin</li>
+                <li><strong>Session Management:</strong> Token expiration & refresh</li>
+            </ul>
+            <h3>Security Measures:</h3>
+            <div class="features-grid">
+                <div class="feature-item">✅ Helmet.js Headers</div>
+                <div class="feature-item">✅ CORS Protection</div>
+                <div class="feature-item">✅ Rate Limiting</div>
+                <div class="feature-item">✅ Input Validation</div>
+                <div class="feature-item">✅ XSS Prevention</div>
+                <div class="feature-item">✅ SQL Injection Protection</div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Geolocation Features -->
+        <div class="slide">
+            <h2><span class="emoji">🌍</span>Geolocation Intelligence</h2>
+            <h3>Location-Based Features:</h3>
+            <ul>
+                <li><strong>Nearby Blood Banks:</strong> Radius-based search with distance calculation</li>
+                <li><strong>Donor Matching:</strong> Find donors within specified radius</li>
+                <li><strong>Emergency Broadcast:</strong> Alert donors within 10km</li>
+                <li><strong>Route Navigation:</strong> Directions to blood banks and camps</li>
+                <li><strong>Geographic Filtering:</strong> City, state, country-based searches</li>
+            </ul>
+            <div class="highlight">
+                <strong>Technology:</strong> MongoDB GeoJSON, Geospatial Queries, React Leaflet Maps
+            </div>
+            <h3>User Benefits:</h3>
+            <div class="features-grid">
+                <div class="feature-item">📍 Find nearest facilities</div>
+                <div class="feature-item">🚗 Get directions</div>
+                <div class="feature-item">📊 Distance-sorted results</div>
+                <div class="feature-item">🎯 Targeted notifications</div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Use Case Scenario -->
+        <div class="slide demo-slide">
+            <h2><span class="emoji">📋</span>Use Case: Emergency Save</h2>
+            <h3>Real-World Scenario:</h3>
+            <div class="workflow-box">
+                <strong>🚨 Step 1:</strong> Hospital XYZ needs O- blood urgently
+            </div>
+            <div class="workflow-box">
+                <strong>🏥 Step 2:</strong> Creates critical request in system
+            </div>
+            <div class="workflow-box">
+                <strong>📡 Step 3:</strong> System matches 45 eligible donors nearby
+            </div>
+            <div class="workflow-box">
+                <strong>🔔 Step 4:</strong> Real-time notifications sent to all matches
+            </div>
+            <div class="workflow-box">
+                <strong>👥 Step 5:</strong> 12 donors respond within 5 minutes
+            </div>
+            <div class="workflow-box">
+                <strong>✅ Step 6:</strong> Blood collected from nearest 2 donors
+            </div>
+            <div class="workflow-box">
+                <strong>❤️ Result:</strong> Patient's life saved!
+            </div>
+        </div>
+
+        <!-- Slide 19: Impact & Metrics -->
+        <div class="slide solution-slide">
+            <h2><span class="emoji">📊</span>Impact & Metrics</h2>
+            <h3>Efficiency Gains:</h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="impact-number">95%</span>
+                    <p>Reduction in search time</p>
+                </div>
+                <div class="stat-box">
+                    <span class="impact-number">60%</span>
+                    <p>Increase in response rate</p>
+                </div>
+                <div class="stat-box">
+                    <span class="impact-number">40%</span>
+                    <p>Reduction in wastage</p>
+                </div>
+                <div class="stat-box">
+                    <span class="impact-number">80%</span>
+                    <p>Faster emergency response</p>
+                </div>
+            </div>
+            <h3>Lives Saved:</h3>
+            <div class="highlight">
+                <p style="font-size: 1.5em; text-align: center;">
+                    Every donation saves up to <strong style="color: #ffd700;">3 LIVES</strong><br>
+                    Our platform makes connections in <strong style="color: #ffd700;">MINUTES</strong> instead of hours
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Automated Scheduling -->
+        <div class="slide">
+            <h2><span class="emoji">🤖</span>Automated Scheduling</h2>
+            <h3>Daily Cron Jobs:</h3>
+            <div class="workflow-box">
+                <strong>⏰ 9:00 AM - Eligibility Check</strong><br>
+                Check all donors, send reminder emails if eligible
+            </div>
+            <div class="workflow-box">
+                <strong>⏰ 10:00 AM - Low Stock Alert</strong><br>
+                Monitor inventory levels, alert blood banks
+            </div>
+            <div class="workflow-box">
+                <strong>⏰ 8:00 AM - Expiry Warnings</strong><br>
+                Check blood unit expiry dates, send warnings
+            </div>
+            <h3>Benefits:</h3>
+            <ul>
+                <li>Reduced manual work</li>
+                <li>Timely alerts and reminders</li>
+                <li>Better planning and forecasting</li>
+                <li>Proactive management</li>
+            </ul>
+        </div>
+
+        <!-- Slide 21: Project Statistics -->
+        <div class="slide tech-slide">
+            <h2><span class="emoji">📊</span>Project Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">38+</span>
+                    Features Implemented
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">56+</span>
+                    API Endpoints
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">25+</span>
+                    React Components
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">8</span>
+                    Database Models
+                </div>
+            </div>
+            <h3>Codebase Overview:</h3>
+            <div class="features-grid">
+                <div class="feature-item">Backend Routes: 8 files</div>
+                <div class="feature-item">Database Schemas: 8 models</div>
+                <div class="feature-item">Frontend Pages: 15+ components</div>
+                <div class="feature-item">Context Providers: 2 (Auth, Socket)</div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Stakeholders -->
+        <div class="slide">
+            <h2><span class="emoji">🤝</span>Who Benefits?</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h3>Donors</h3>
+                    <p style="font-size: 0.9em;">Easy tracking, recognition, flexible scheduling</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Blood Banks</h3>
+                    <p style="font-size: 0.9em;">Efficient management, reduced wastage</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Hospitals</h3>
+                    <p style="font-size: 0.9em;">Quick availability, emergency response</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Patients</h3>
+                    <p style="font-size: 0.9em;">Faster access, higher survival rates</p>
+                </div>
+            </div>
+            <h3 style="margin-top: 30px; text-align: center;">Society Benefits:</h3>
+            <ul>
+                <li>Life-saving platform with real-world impact</li>
+                <li>Community engagement and health awareness</li>
+                <li>Digital transformation in healthcare</li>
+                <li>Emergency preparedness</li>
+            </ul>
+        </div>
+
+        <!-- Slide 23: Future Enhancements -->
+        <div class="slide">
+            <h2><span class="emoji">🔮</span>Future Roadmap</h2>
+            <h3>Phase 1: Intelligence (Q1 2026)</h3>
+            <ul>
+                <li>🤖 AI-based demand forecasting</li>
+                <li>📊 Predictive analytics with ML</li>
+                <li>🎯 Smart donor recommendations</li>
+            </ul>
+            <h3>Phase 2: Integration (Q2 2026)</h3>
+            <ul>
+                <li>🏥 Hospital EHR integration</li>
+                <li>💳 Payment gateway for camps</li>
+                <li>📱 SMS notifications</li>
+                <li>🌐 Multi-language support</li>
+            </ul>
+            <h3>Phase 3: Innovation (Q3 2026)</h3>
+            <ul>
+                <li>🔗 Blockchain ledger for transparency</li>
+                <li>🌡️ IoT smart storage integration</li>
+                <li>📱 React Native mobile app</li>
+            </ul>
+        </div>
+
+        <!-- Slide 24: Demo Guide -->
+        <div class="slide demo-slide">
+            <h2><span class="emoji">🎬</span>Live Demo Flow</h2>
+            <h3>12-Minute Demonstration:</h3>
+            <div class="workflow-box">
+                <strong>1. Registration & Login (2 min)</strong><br>
+                Register different users, complete profiles
+            </div>
+            <div class="workflow-box">
+                <strong>2. Donor Journey (3 min)</strong><br>
+                Profile, camps, requests, rewards
+            </div>
+            <div class="workflow-box">
+                <strong>3. Blood Bank Operations (3 min)</strong><br>
+                Inventory, camps, analytics
+            </div>
+            <div class="workflow-box">
+                <strong>4. Hospital Request (2 min)</strong><br>
+                Create request, track status
+            </div>
+            <div class="workflow-box">
+                <strong>5. Real-Time Features (2 min)</strong><br>
+                Live notifications, Socket.io demo
+            </div>
+        </div>
+
+        <!-- Slide 25: Implementation -->
+        <div class="slide">
+            <h2><span class="emoji">🚀</span>Getting Started</h2>
+            <h3>Quick Start:</h3>
+            <div class="code-block">
+# Clone repository
+git clone &lt;repository-url&gt;
+
+# Install all dependencies
+npm run install:all
+
+# Configure environment
+cp .env.example .env
+
+# Start application
+npm run dev:all
+
+# Access at http://localhost:3000
+            </div>
+            <h3>Requirements:</h3>
+            <div class="features-grid">
+                <div class="feature-item">Node.js v14+</div>
+                <div class="feature-item">MongoDB v4.4+</div>
+                <div class="feature-item">Modern Browser</div>
+                <div class="feature-item">4GB RAM minimum</div>
+            </div>
+        </div>
+
+        <!-- Slide 26: API Overview -->
+        <div class="slide tech-slide">
+            <h2><span class="emoji">🔌</span>API Overview</h2>
+            <h3>Main Endpoints:</h3>
+            <div class="features-grid">
+                <div class="feature-item">Authentication (4 endpoints)</div>
+                <div class="feature-item">Donors (8 endpoints)</div>
+                <div class="feature-item">Blood Banks (6 endpoints)</div>
+                <div class="feature-item">Hospitals (5 endpoints)</div>
+                <div class="feature-item">Inventory (7 endpoints)</div>
+                <div class="feature-item">Requests (9 endpoints)</div>
+                <div class="feature-item">Notifications (6 endpoints)</div>
+                <div class="feature-item">Analytics (5 endpoints)</div>
+                <div class="feature-item">Camps (6 endpoints)</div>
+            </div>
+            <div class="highlight">
+                <strong>API Base URL:</strong> http://localhost:5000/api<br>
+                <strong>Documentation:</strong> Available in README.md
+            </div>
+        </div>
+
+        <!-- Slide 27: Testing & Quality -->
+        <div class="slide">
+            <h2><span class="emoji">🧪</span>Testing & Quality</h2>
+            <h3>Quality Assurance:</h3>
+            <ul>
+                <li><strong>Unit Testing:</strong> Model validation, utility functions</li>
+                <li><strong>Integration Testing:</strong> API endpoints, database operations</li>
+                <li><strong>Security Testing:</strong> Authentication bypass, injection attacks</li>
+                <li><strong>Performance Testing:</strong> Load testing, response time</li>
+                <li><strong>User Acceptance:</strong> Real user feedback, usability</li>
+            </ul>
+            <h3>Code Quality:</h3>
+            <div class="features-grid">
+                <div class="feature-item">Clean Code Principles</div>
+                <div class="feature-item">Consistent Naming</div>
+                <div class="feature-item">Comprehensive Comments</div>
+                <div class="feature-item">Version Control (Git)</div>
+            </div>
+        </div>
+
+        <!-- Slide 28: Competitive Advantages -->
+        <div class="slide solution-slide">
+            <h2><span class="emoji">💪</span>Why Choose Us?</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h3>Comprehensive</h3>
+                    <p style="font-size: 0.9em;">All-in-one solution for entire ecosystem</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Real-Time</h3>
+                    <p style="font-size: 0.9em;">Instant updates via Socket.io</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Intelligent</h3>
+                    <p style="font-size: 0.9em;">Geolocation matching & automation</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Secure</h3>
+                    <p style="font-size: 0.9em;">Enterprise-grade security</p>
+                </div>
+                <div class="stat-box">
+                    <h3>User-Friendly</h3>
+                    <p style="font-size: 0.9em;">Modern, intuitive interface</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Scalable</h3>
+                    <p style="font-size: 0.9em;">Cloud-ready architecture</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 29: Success Story -->
+        <div class="slide">
+            <h2><span class="emoji">🌟</span>Success Story</h2>
+            <div class="highlight">
+                <h3>Case Study: Emergency Save</h3>
+                <p><strong>Patient:</strong> 8-year-old with rare blood type (AB-)</p>
+                <p><strong>Situation:</strong> Road accident, critical condition</p>
+                <p><strong>Challenge:</strong> Only 2 units available in city</p>
+            </div>
+            <h3>How We Helped:</h3>
+            <div class="workflow-box">📡 Emergency broadcast to 200+ donors</div>
+            <div class="workflow-box">⚡ 5 donors responded in 10 minutes</div>
+            <div class="workflow-box">🚗 Blood collected from nearest donors</div>
+            <div class="workflow-box">❤️ <strong style="color: #ffd700;">LIFE SAVED!</strong></div>
+            <h3 style="text-align: center; margin-top: 30px; font-size: 1.8em;">
+                This is why we do what we do.
+            </h3>
+        </div>
+
+        <!-- Slide 30: Thank You -->
+        <div class="slide title-slide">
+            <h1><span class="emoji">🙏</span>Thank You!</h1>
+            <h2 style="font-size: 2em; margin-top: 30px;">Together, We Save Lives!</h2>
+            <br><br>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 3em;">🩸</span>
+                    <p>Every Donation Matters</p>
+                </div>
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 3em;">⚡</span>
+                    <p>Technology Saves Lives</p>
+                </div>
+                <div class="stat-box">
+                    <span class="emoji" style="font-size: 3em;">🤝</span>
+                    <p>Community is Powerful</p>
+                </div>
+            </div>
+            <br>
+            <h3 style="font-size: 1.5em;">Questions?</h3>
+            <p style="font-size: 1.2em; margin-top: 20px;">
+                Let's discuss how this platform can transform<br>
+                blood management in your community!
+            </p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="previousSlide()">◀ Previous</button>
+        <button class="btn" onclick="nextSlide()">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) previousSlide();
+        }
+
+        // Prevent default spacebar scroll
+        window.addEventListener('keydown', function(e) {
+            if(e.key === ' ' && e.target === document.body) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+

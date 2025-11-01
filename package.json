@@ -1,0 +1,44 @@
+{
+  "name": "bloodbank-network",
+  "version": "1.0.0",
+  "description": "A comprehensive blood bank network application connecting donors, patients, hospitals, and blood banks",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev:all": "concurrently \"npm run dev\" \"npm run client\"",
+    "install:all": "npm install && cd frontend && npm install"
+  },
+  "keywords": [
+    "blood-bank",
+    "healthcare",
+    "donation",
+    "emergency"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
+    "axios": "^1.12.2",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.10.0",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.0",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.10.1",
+    "socket.io": "^4.7.2",
+    "twilio": "^5.10.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "nodemon": "^3.0.1"
+  }
+}

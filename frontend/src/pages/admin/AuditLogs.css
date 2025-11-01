@@ -1,0 +1,363 @@
+.audit-logs {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+/* Page header styles now in AdminPageHeader.css - keeping layout for buttons */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-export {
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.btn-export:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+/* Filters */
+.filters-section {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-group label {
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 10px 15px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: all 0.3s;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-search {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  transition: all 0.3s;
+  height: fit-content;
+}
+
+.btn-search:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Logs Container */
+.logs-container {
+  margin-bottom: 30px;
+}
+
+.logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.log-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+  border-left: 4px solid transparent;
+}
+
+.log-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transform: translateX(5px);
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f8f9fa;
+}
+
+.log-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-icon {
+  font-size: 1.5em;
+}
+
+.action-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.action-badge.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.action-badge.danger {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.action-badge.warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.action-badge.info {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.action-badge.default {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.log-time {
+  color: #7f8c8d;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.log-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.log-detail {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.detail-label {
+  color: #7f8c8d;
+  font-weight: 600;
+  font-size: 0.9em;
+  min-width: 120px;
+}
+
+.detail-value {
+  color: #2c3e50;
+  flex: 1;
+}
+
+.log-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid #f8f9fa;
+  font-size: 0.85em;
+  color: #95a5a6;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+.status-badge.success {
+  background: #27ae60;
+  color: white;
+}
+
+.status-badge.failed {
+  background: #e74c3c;
+  color: white;
+}
+
+/* No Logs */
+.no-logs {
+  background: white;
+  border-radius: 15px;
+  padding: 60px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.no-logs p {
+  color: #7f8c8d;
+  font-size: 1.2em;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.page-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.page-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.page-info {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2em;
+  color: #7f8c8d;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .filter-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .audit-logs {
+    padding: 15px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .page-header h1 {
+    font-size: 1.8em;
+  }
+
+  .filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .log-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .log-detail {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .detail-label {
+    min-width: auto;
+  }
+
+  .log-meta {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.5em;
+  }
+
+  .filters-section {
+    padding: 15px;
+  }
+
+  .log-card {
+    padding: 15px;
+  }
+}
+

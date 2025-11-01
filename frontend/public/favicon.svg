@@ -1,0 +1,16 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<defs>
+<linearGradient id="bloodGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+<stop offset="0%" style="stop-color:rgb(248,113,113);stop-opacity:1" />
+<stop offset="50%" style="stop-color:rgb(239,68,68);stop-opacity:1" />
+<stop offset="100%" style="stop-color:rgb(220,38,38);stop-opacity:1" />
+</linearGradient>
+<radialGradient id="shine" cx="40%" cy="30%">
+<stop offset="0%" style="stop-color:white;stop-opacity:0.5" />
+<stop offset="100%" style="stop-color:white;stop-opacity:0" />
+</radialGradient>
+</defs>
+<path d="M50 85 C35 85 25 75 25 63 C25 45 35 35 50 15 C65 35 75 45 75 63 C75 75 65 85 50 85 Z" fill="url(#bloodGradient)" stroke="#991b1b" stroke-width="1.5"/>
+<ellipse cx="42" cy="38" rx="10" ry="12" fill="url(#shine)" opacity="0.6"/>
+<circle cx="40" cy="35" r="4" fill="white" opacity="0.5"/>
+</svg>

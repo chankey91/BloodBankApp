@@ -1,0 +1,130 @@
+/* Modern Admin Page Header Styling */
+.page-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.5;
+}
+
+.page-header h1 {
+  color: white !important;
+  font-size: 2.2em;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.page-header p {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-size: 1.1em;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  opacity: 0.95;
+}
+
+/* Admin Header variant for AdminDashboard */
+.admin-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 50px 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.5;
+}
+
+.admin-header h1 {
+  color: white !important;
+  font-size: 2.8em;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.admin-header p {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-size: 1.2em;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  opacity: 0.95;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-header {
+    padding: 30px 20px;
+  }
+
+  .page-header h1 {
+    font-size: 1.8em;
+  }
+
+  .page-header p {
+    font-size: 1em;
+  }
+
+  .admin-header {
+    padding: 40px 20px;
+  }
+
+  .admin-header h1 {
+    font-size: 2.2em;
+  }
+
+  .admin-header p {
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.5em;
+  }
+
+  .page-header p {
+    font-size: 0.95em;
+  }
+
+  .admin-header h1 {
+    font-size: 1.8em;
+  }
+
+  .admin-header p {
+    font-size: 1em;
+  }
+}
+
