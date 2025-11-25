@@ -37,13 +37,9 @@ ssh -p 2022 ubuntu@103.230.227.5
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# Install MongoDB
-wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
-sudo systemctl start mongod
-sudo systemctl enable mongod
+# MongoDB Atlas (Cloud) - No local installation needed
+# Just ensure your Atlas cluster is set up and IP is whitelisted
+# See MONGODB_ATLAS_SETUP.md for details
 
 # Install Nginx
 sudo apt-get install -y nginx
@@ -90,7 +86,10 @@ Paste this content (update with your actual values):
 ```env
 NODE_ENV=production
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/bloodbank
+
+# MongoDB Atlas Connection (replace with your actual connection string)
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/bloodbank?retryWrites=true&w=majority
+
 JWT_SECRET=your_super_secret_key_change_this
 JWT_EXPIRE=30d
 EMAIL_SERVICE=gmail

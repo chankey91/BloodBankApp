@@ -57,19 +57,23 @@ install_nodejs() {
     fi
 }
 
-# Install MongoDB if not installed
+# Install MongoDB if not installed (OPTIONAL - Skip if using MongoDB Atlas)
 install_mongodb() {
-    if ! command -v mongod &> /dev/null; then
-        print_message "Installing MongoDB..."
-        wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -
-        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-        apt-get update
-        apt-get install -y mongodb-org
-        systemctl start mongod
-        systemctl enable mongod
-    else
-        print_message "MongoDB already installed"
-    fi
+    print_warning "Skipping local MongoDB installation - Using MongoDB Atlas (Cloud)"
+    print_message "Make sure your MongoDB Atlas connection string is configured in .env"
+    
+    # Uncomment below if you want to install MongoDB locally instead
+    # if ! command -v mongod &> /dev/null; then
+    #     print_message "Installing MongoDB..."
+    #     wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -
+    #     echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+    #     apt-get update
+    #     apt-get install -y mongodb-org
+    #     systemctl start mongod
+    #     systemctl enable mongod
+    # else
+    #     print_message "MongoDB already installed"
+    # fi
 }
 
 # Install Nginx if not installed
@@ -213,8 +217,8 @@ NODE_ENV=production
 # Server
 PORT=5000
 
-# Database
-MONGO_URI=mongodb://localhost:27017/bloodbank
+# Database - MongoDB Atlas (Cloud)
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/bloodbank?retryWrites=true&w=majority
 
 # JWT
 JWT_SECRET=your_super_secret_jwt_key_change_this_in_production

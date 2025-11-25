@@ -76,17 +76,18 @@ sudo apt-get install -y nodejs
 node -v  # Verify installation
 ```
 
-#### 3.2 Install MongoDB
+#### 3.2 MongoDB Configuration
 
-```bash
-wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
-sudo systemctl start mongod
-sudo systemctl enable mongod
-sudo systemctl status mongod
-```
+**Note**: Since you're using **MongoDB Atlas (Cloud)**, you don't need to install MongoDB locally.
+
+Just ensure:
+- Your MongoDB Atlas cluster is created
+- Server IP `103.230.227.5` is whitelisted in Atlas Network Access
+- Connection string is configured in `.env`
+
+See `MONGODB_ATLAS_SETUP.md` for detailed MongoDB Atlas setup.
+
+**Skip local MongoDB installation** unless you want a local database for testing.
 
 #### 3.3 Install Nginx
 
