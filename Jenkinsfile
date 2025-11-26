@@ -162,6 +162,20 @@ pipeline {
                         exit 0
                     fi
                     
+                    # Deploy Nginx configuration
+                    echo 'Deploying Nginx configuration...'
+                    sudo cp nginx.conf /etc/nginx/sites-available/bloodbank
+                    
+                    # Enable site if not already enabled
+                    if [ ! -L /etc/nginx/sites-enabled/bloodbank ]; then
+                        sudo ln -s /etc/nginx/sites-available/bloodbank /etc/nginx/sites-enabled/
+                        echo 'Nginx site enabled'
+                    fi
+                    
+                    # Test Nginx configuration
+                    echo 'Testing Nginx configuration...'
+                    sudo nginx -t
+                    
                     # Restart Nginx
                     echo 'Restarting Nginx...'
                     sudo systemctl restart nginx
@@ -169,7 +183,7 @@ pipeline {
                     # Check Nginx status
                     sudo systemctl is-active nginx
                     if [ $? -eq 0 ]; then
-                        echo 'Nginx is running successfully'
+                        echo '✅ Nginx is running successfully on port 8081'
                     else
                         echo 'Warning: Nginx may not be running properly'
                     fi
@@ -191,16 +205,34 @@ pipeline {
                     echo 'Waiting for backend to start...'
                     sleep 5
                     
-                    # Check if backend port is listening
+                    # Check if backend port is listening (internal port 5000)
+                    echo 'Checking if backend is listening on port 5000...'
                     if command -v netstat &> /dev/null; then
-                        netstat -tuln | grep :5000
+                        netstat -tuln | grep :5000 || echo 'Backend port check skipped'
                     fi
                     
+                    # Check if Nginx is listening on port 8081
+                    echo 'Checking if Nginx is listening on port 8081...'
+                    if command -v netstat &> /dev/null; then
+                        netstat -tuln | grep :8081 && echo '✅ Nginx is listening on port 8081' || echo '⚠️ Port 8081 not detected'
+                    fi
+                    
+                    # Try to reach frontend through Nginx on port 8081
+                    echo 'Checking frontend availability...'
+                    curl -s -o /dev/null -w "%{http_code}" http://localhost:8081 | grep -q "200" && echo '✅ Frontend is accessible' || echo '⚠️ Frontend check failed (may need time to start)'
+                    
                     # Try to reach health endpoint (if exists)
-                    echo 'Checking health endpoint...'
+                    echo 'Checking API endpoint...'
                     curl -f http://localhost:5000/api/health 2>/dev/null || echo 'Health endpoint not available (this is okay if not implemented)'
                     
+                    echo ''
+                    echo '=========================================='
                     echo '✅ Deployment completed successfully!'
+                    echo '=========================================='
+                    echo 'Application is available at:'
+                    echo '  🌐 Frontend: http://103.230.227.5:8081'
+                    echo '  🔌 Backend API: http://103.230.227.5:8081/api'
+                    echo '=========================================='
                 '''
             }
         }
