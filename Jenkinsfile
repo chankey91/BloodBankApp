@@ -84,6 +84,9 @@ pipeline {
                     sudo rm -rf ${BACKEND_DIR}/*
                     # Copy all backend files
                     sudo cp -r backend/. ${BACKEND_DIR}/
+                    # Copy root package.json and package-lock.json (backend dependencies are in root)
+                    sudo cp package.json ${BACKEND_DIR}/
+                    sudo cp package-lock.json ${BACKEND_DIR}/
                     # Remove node_modules if copied
                     sudo rm -rf ${BACKEND_DIR}/node_modules
                     
