@@ -15,6 +15,7 @@ const DonationCamps = () => {
 
   useEffect(() => {
     fetchCamps();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   useEffect(() => {

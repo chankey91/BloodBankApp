@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
-import { FaHandHoldingHeart, FaTint, FaCalendarAlt, FaTrophy } from 'react-icons/fa';
+import { FaHandHoldingHeart, FaTint, FaCalendarAlt } from 'react-icons/fa';
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const [stats, setStats] = useState(null);
   const [recentRequests, setRecentRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -12,6 +12,7 @@ const Requests = () => {
 
   useEffect(() => {
     fetchRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const fetchRequests = async () => {

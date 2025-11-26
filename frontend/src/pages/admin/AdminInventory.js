@@ -18,6 +18,7 @@ const AdminInventory = () => {
 
   useEffect(() => {
     fetchInventory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchInventory = async () => {

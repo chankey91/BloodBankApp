@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../context/AuthContext';
 import { FaPlus } from 'react-icons/fa';
 
 const Inventory = () => {
-  const { user } = useAuth();
   const [inventory, setInventory] = useState([]);
   const [bloodBankId, setBloodBankId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,6 +19,7 @@ const Inventory = () => {
       fetchInventory();
       fetchLowStock();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bloodBankId]);
 
   const fetchBloodBankProfile = async () => {

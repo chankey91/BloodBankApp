@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './AuditLogs.css';
 import './AdminPageHeader.css';
 
@@ -41,8 +40,6 @@ const AuditLogs = () => {
 
   const fetchAuditLogs = async () => {
     try {
-      const token = localStorage.getItem('token');
-      
       // In production, fetch from backend
       // const params = new URLSearchParams({
       //   action: filters.action !== 'all' ? filters.action : '',

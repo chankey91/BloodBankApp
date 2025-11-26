@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaTrophy } from 'react-icons/fa';
@@ -8,7 +8,6 @@ import { format } from 'date-fns';
 const DonorProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProfile();
