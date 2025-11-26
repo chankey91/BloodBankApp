@@ -78,13 +78,21 @@ pipeline {
                     sudo mkdir -p ${BACKEND_DIR}
                     sudo mkdir -p ${FRONTEND_DIR}
                     
-                    # Deploy Backend
+                    # Deploy Backend (copy all files including package.json)
                     echo "Deploying backend files..."
-                    sudo cp -r backend/* ${BACKEND_DIR}/
+                    # First, clean the backend directory
+                    sudo rm -rf ${BACKEND_DIR}/*
+                    # Copy all backend files
+                    sudo cp -r backend/. ${BACKEND_DIR}/
+                    # Remove node_modules if copied
+                    sudo rm -rf ${BACKEND_DIR}/node_modules
                     
                     # Deploy Frontend Build
                     echo "Deploying frontend build..."
-                    sudo cp -r frontend/build/* ${FRONTEND_DIR}/
+                    # Clean frontend directory
+                    sudo rm -rf ${FRONTEND_DIR}/*
+                    # Copy all frontend build files
+                    sudo cp -r frontend/build/. ${FRONTEND_DIR}/
                     
                     # Copy environment file (if exists)
                     if [ -f .env.production ]; then
