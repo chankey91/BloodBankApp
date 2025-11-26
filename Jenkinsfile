@@ -5,7 +5,7 @@ pipeline {
         // Server Configuration
         SERVER_IP = '103.230.227.5'
         SSH_PORT = '2022'
-        DEPLOY_USER = 'ubuntu'  // Change if different
+        DEPLOY_USER = 'sanchet_ftpuser'  // User with deployment privileges
         
         // Application Configuration
         APP_DIR = '/var/www/bloodbank'
@@ -91,12 +91,15 @@ pipeline {
                         sudo cp .env.production ${BACKEND_DIR}/.env
                     fi
                     
-                    # Set proper ownership
-                    sudo chown -R ${DEPLOY_USER}:${DEPLOY_USER} ${APP_DIR}
+                    # Set proper ownership (skip if user doesn't exist or not needed)
+                    # sudo chown -R ${DEPLOY_USER}:${DEPLOY_USER} ${APP_DIR}
+                    
+                    # Ensure files are readable and executable
+                    sudo chmod -R 755 ${APP_DIR}
                     
                     # Install backend dependencies on server
                     cd ${BACKEND_DIR}
-                    npm install --production
+                    sudo npm install --production
                 '''
             }
         }
