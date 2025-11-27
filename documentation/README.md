@@ -15,19 +15,6 @@ A comprehensive blood bank network application that connects donors, patients, h
 - [Contributing](#contributing)
 - [License](#license)
 
-## 📚 Documentation
-
-Comprehensive documentation is available in the [`documentation/`](documentation/) folder:
-
-- **[Documentation Index](documentation/INDEX.md)** - Complete guide to all documentation
-- **[CI/CD Setup Guide](documentation/CICD_SETUP_GUIDE.md)** - Jenkins pipeline setup
-- **[Admin Panel Guide](documentation/ADMIN_PANEL_GUIDE.md)** - Admin features
-- **[Azure Deployment](documentation/AZURE_QUICK_START.md)** - Deploy to Azure
-- **[MongoDB Atlas Setup](documentation/MONGODB_ATLAS_SETUP.md)** - Database setup
-- **And many more guides...**
-
-📖 **[View Full Documentation Index →](documentation/INDEX.md)**
-
 ## ✨ Features
 
 ### 🔑 Core Features
