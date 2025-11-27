@@ -77,6 +77,7 @@ pipeline {
                     sudo mkdir -p ${APP_DIR}
                     sudo mkdir -p ${BACKEND_DIR}
                     sudo mkdir -p ${FRONTEND_DIR}
+                    sudo mkdir -p ${APP_DIR}/logs
                     
                     # Deploy Backend (copy all files including package.json)
                     echo "Deploying backend files..."
@@ -117,41 +118,33 @@ pipeline {
         
         stage('Restart Application') {
             steps {
-                echo 'Restarting application with PM2...'
+                echo 'Restarting application...'
                 sh '''
                     set +e  # Don't exit on error
                     
-                    # Install PM2 if not installed
-                    if ! command -v pm2 &> /dev/null; then
-                        sudo npm install -g pm2
-                    fi
-                    
-                    # Change to backend directory
                     cd ${BACKEND_DIR}
                     
-                    # Run PM2 commands as root directly (using sudo su)
-                    # Check if app is already running
-                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 describe ${PM2_APP_NAME}" > /dev/null 2>&1
-                    APP_EXISTS=$?
+                    # Kill any existing node processes running server.js
+                    echo 'Stopping any existing application processes...'
+                    sudo pkill -f "node.*server.js" || echo 'No existing processes found'
+                    sleep 2
                     
-                    if [ $APP_EXISTS -eq 0 ]; then
-                        echo 'Application exists, restarting...'
-                        sudo su - root -c "cd ${BACKEND_DIR} && PM2_HOME=/root/.pm2 pm2 restart ${PM2_APP_NAME}"
+                    # Start the application in background using nohup
+                    echo 'Starting application...'
+                    sudo nohup node server.js > ${APP_DIR}/logs/app.log 2>&1 &
+                    
+                    # Wait a bit for app to start
+                    sleep 3
+                    
+                    # Check if process is running
+                    if pgrep -f "node.*server.js" > /dev/null; then
+                        echo '✅ Application started successfully'
+                        echo 'Process ID:'
+                        pgrep -f "node.*server.js"
                     else
-                        echo 'Application does not exist, starting new instance...'
-                        sudo su - root -c "cd ${BACKEND_DIR} && PM2_HOME=/root/.pm2 pm2 start server.js --name ${PM2_APP_NAME}"
+                        echo '⚠️ Application may not have started properly'
+                        echo 'Check logs at: ${APP_DIR}/logs/app.log'
                     fi
-                    
-                    # Save PM2 configuration
-                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 save --force"
-                    
-                    # Show PM2 status
-                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 status"
-                    
-                    # Setup PM2 to start on boot
-                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 startup systemd -u root --hp /root"
-                    
-                    echo '✅ PM2 application started successfully'
                 '''
             }
         }
@@ -203,9 +196,15 @@ pipeline {
                 sh '''
                     set +e  # Don't exit on error
                     
-                    # Check if backend is running with PM2
-                    echo 'Checking PM2 status...'
-                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 status ${PM2_APP_NAME}" || echo 'PM2 status check completed'
+                    # Check if backend is running
+                    echo 'Checking application status...'
+                    if pgrep -f "node.*server.js" > /dev/null; then
+                        echo '✅ Backend is running'
+                        echo 'Process ID:'
+                        pgrep -f "node.*server.js"
+                    else
+                        echo '⚠️ Backend process not found'
+                    fi
                     
                     # Wait for backend to start
                     echo 'Waiting for backend to start...'
