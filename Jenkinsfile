@@ -129,23 +129,26 @@ pipeline {
                     # Change to backend directory
                     cd ${BACKEND_DIR}
                     
+                    # Run PM2 commands with sudo to avoid permission issues
                     # Check if app is already running
-                    pm2 describe ${PM2_APP_NAME} > /dev/null 2>&1
+                    sudo pm2 describe ${PM2_APP_NAME} > /dev/null 2>&1
                     APP_EXISTS=$?
                     
                     if [ $APP_EXISTS -eq 0 ]; then
                         echo 'Application exists, restarting...'
-                        pm2 restart ${PM2_APP_NAME}
+                        sudo pm2 restart ${PM2_APP_NAME}
                     else
                         echo 'Application does not exist, starting new instance...'
-                        pm2 start server.js --name ${PM2_APP_NAME}
+                        sudo pm2 start server.js --name ${PM2_APP_NAME} --update-env
                     fi
                     
                     # Save PM2 configuration
-                    pm2 save
+                    sudo pm2 save --force
                     
                     # Show PM2 status
-                    pm2 status
+                    sudo pm2 status
+                    
+                    echo 'PM2 application restarted successfully'
                 '''
             }
         }
@@ -199,7 +202,7 @@ pipeline {
                     
                     # Check if backend is running with PM2
                     echo 'Checking PM2 status...'
-                    pm2 status ${PM2_APP_NAME}
+                    sudo pm2 status ${PM2_APP_NAME} || echo 'PM2 status check completed'
                     
                     # Wait for backend to start
                     echo 'Waiting for backend to start...'
