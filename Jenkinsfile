@@ -126,33 +126,30 @@ pipeline {
                         sudo npm install -g pm2
                     fi
                     
-                    # Set PM2_HOME to root's directory when using sudo
-                    export PM2_HOME=/root/.pm2
-                    
                     # Change to backend directory
                     cd ${BACKEND_DIR}
                     
-                    # Run PM2 commands with sudo and PM2_HOME set
+                    # Run PM2 commands as root directly (using sudo su)
                     # Check if app is already running
-                    sudo PM2_HOME=/root/.pm2 pm2 describe ${PM2_APP_NAME} > /dev/null 2>&1
+                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 describe ${PM2_APP_NAME}" > /dev/null 2>&1
                     APP_EXISTS=$?
                     
                     if [ $APP_EXISTS -eq 0 ]; then
                         echo 'Application exists, restarting...'
-                        sudo PM2_HOME=/root/.pm2 pm2 restart ${PM2_APP_NAME}
+                        sudo su - root -c "cd ${BACKEND_DIR} && PM2_HOME=/root/.pm2 pm2 restart ${PM2_APP_NAME}"
                     else
                         echo 'Application does not exist, starting new instance...'
-                        sudo PM2_HOME=/root/.pm2 pm2 start server.js --name ${PM2_APP_NAME}
+                        sudo su - root -c "cd ${BACKEND_DIR} && PM2_HOME=/root/.pm2 pm2 start server.js --name ${PM2_APP_NAME}"
                     fi
                     
                     # Save PM2 configuration
-                    sudo PM2_HOME=/root/.pm2 pm2 save --force
+                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 save --force"
                     
                     # Show PM2 status
-                    sudo PM2_HOME=/root/.pm2 pm2 status
+                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 status"
                     
                     # Setup PM2 to start on boot
-                    sudo PM2_HOME=/root/.pm2 pm2 startup systemd -u root --hp /root
+                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 startup systemd -u root --hp /root"
                     
                     echo '✅ PM2 application started successfully'
                 '''
@@ -208,7 +205,7 @@ pipeline {
                     
                     # Check if backend is running with PM2
                     echo 'Checking PM2 status...'
-                    sudo PM2_HOME=/root/.pm2 pm2 status ${PM2_APP_NAME} || echo 'PM2 status check completed'
+                    sudo su - root -c "PM2_HOME=/root/.pm2 pm2 status ${PM2_APP_NAME}" || echo 'PM2 status check completed'
                     
                     # Wait for backend to start
                     echo 'Waiting for backend to start...'
