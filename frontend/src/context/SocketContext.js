@@ -9,6 +9,16 @@ export const useSocket = () => {
   return useContext(SocketContext);
 };
 
+// Determine socket URL based on environment
+const getSocketUrl = () => {
+  // In production, connect to the same origin (Nginx proxies /socket.io to backend)
+  if (process.env.NODE_ENV === 'production') {
+    return window.location.origin;
+  }
+  // In development, use localhost:5000
+  return 'http://localhost:5000';
+};
+
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
@@ -16,7 +26,8 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:5000');
+      const socketUrl = getSocketUrl();
+      const newSocket = io(socketUrl);
 
       newSocket.on('connect', () => {
         console.log('Socket connected');
