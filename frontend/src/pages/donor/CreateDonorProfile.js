@@ -52,13 +52,19 @@ const CreateDonorProfile = () => {
     setLoading(true);
 
     try {
+      // Build coordinates array only if both lat/long are provided
+      const hasCoordinates = formData.latitude && formData.longitude;
+      const coordinates = hasCoordinates 
+        ? [parseFloat(formData.longitude), parseFloat(formData.latitude)]
+        : [0, 0]; // Default coordinates if not provided
+
       const payload = {
         bloodType: formData.bloodType,
         dateOfBirth: formData.dateOfBirth,
         gender: formData.gender,
         weight: parseFloat(formData.weight),
         location: {
-          coordinates: [parseFloat(formData.longitude), parseFloat(formData.latitude)],
+          coordinates: coordinates,
           address: formData.address,
           city: formData.city,
           state: formData.state,
@@ -214,7 +220,7 @@ const CreateDonorProfile = () => {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Latitude *</label>
+                <label className="form-label">Latitude (Optional)</label>
                 <input
                   type="number"
                   step="any"
@@ -222,12 +228,12 @@ const CreateDonorProfile = () => {
                   className="form-input"
                   value={formData.latitude}
                   onChange={handleChange}
-                  required
+                  placeholder="e.g., 28.6139"
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label">Longitude *</label>
+                <label className="form-label">Longitude (Optional)</label>
                 <input
                   type="number"
                   step="any"
@@ -235,19 +241,24 @@ const CreateDonorProfile = () => {
                   className="form-input"
                   value={formData.longitude}
                   onChange={handleChange}
-                  required
+                  placeholder="e.g., 77.2090"
                 />
               </div>
             </div>
 
-            <button 
-              type="button" 
-              onClick={getCurrentLocation} 
-              className="btn btn-outline"
-              style={{ marginBottom: '1rem' }}
-            >
-              📍 Use My Current Location
-            </button>
+            <div style={{ marginBottom: '1rem' }}>
+              <button 
+                type="button" 
+                onClick={getCurrentLocation} 
+                className="btn btn-outline"
+                style={{ marginRight: '1rem' }}
+              >
+                📍 Use My Current Location
+              </button>
+              <small style={{ color: 'var(--text-secondary)', display: 'block', marginTop: '0.5rem' }}>
+                💡 Coordinates help match you with nearby blood requests. You can skip this if location detection doesn't work.
+              </small>
+            </div>
 
             <div style={{ display: 'flex', gap: '1rem' }}>
               <button type="submit" className="btn btn-primary" disabled={loading}>

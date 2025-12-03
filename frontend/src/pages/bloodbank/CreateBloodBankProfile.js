@@ -85,7 +85,9 @@ const CreateBloodBankProfile = () => {
         registrationNumber: formData.registrationNumber,
         type: formData.type,
         location: {
-          coordinates: [parseFloat(formData.longitude), parseFloat(formData.latitude)],
+          coordinates: formData.latitude && formData.longitude 
+            ? [parseFloat(formData.longitude), parseFloat(formData.latitude)]
+            : [0, 0],
           address: formData.address,
           city: formData.city,
           state: formData.state,
@@ -233,7 +235,7 @@ const CreateBloodBankProfile = () => {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Latitude *</label>
+                <label className="form-label">Latitude (Optional)</label>
                 <input
                   type="number"
                   step="any"
@@ -241,12 +243,12 @@ const CreateBloodBankProfile = () => {
                   className="form-input"
                   value={formData.latitude}
                   onChange={handleChange}
-                  required
+                  placeholder="e.g., 28.6139"
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label">Longitude *</label>
+                <label className="form-label">Longitude (Optional)</label>
                 <input
                   type="number"
                   step="any"
@@ -254,19 +256,23 @@ const CreateBloodBankProfile = () => {
                   className="form-input"
                   value={formData.longitude}
                   onChange={handleChange}
-                  required
+                  placeholder="e.g., 77.2090"
                 />
               </div>
             </div>
 
-            <button 
-              type="button" 
-              onClick={getCurrentLocation} 
-              className="btn btn-outline"
-              style={{ marginBottom: '1rem' }}
-            >
-              📍 Use Current Location
-            </button>
+            <div style={{ marginBottom: '1rem' }}>
+              <button 
+                type="button" 
+                onClick={getCurrentLocation} 
+                className="btn btn-outline"
+              >
+                📍 Use Current Location
+              </button>
+              <small style={{ color: 'var(--text-secondary)', display: 'block', marginTop: '0.5rem' }}>
+                💡 Coordinates help donors find your blood bank. You can skip this if location detection doesn't work.
+              </small>
+            </div>
 
             <h2 className="card-header" style={{ marginTop: '2rem' }}>Contact Information</h2>
             
